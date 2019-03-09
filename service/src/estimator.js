@@ -44,8 +44,8 @@ const calculate = (latest, previousMonth) => {
   }
   const daysSinceLast = getDiffInDays(moment.utc(latestDate), moment.utc(previousMonthDate));
   const daysLeft = getDaysUntilMonthEnd(latestDate);
-  const dailyUsage = Math.ceil(usageSinceLast / daysSinceLast);
-  return usageSinceLast + (daysLeft * dailyUsage);
+  const dailyUsage = usageSinceLast / daysSinceLast;
+  return Math.ceil(usageSinceLast + (daysLeft * dailyUsage));
 };
 
 module.exports = {
