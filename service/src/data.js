@@ -63,5 +63,6 @@ function insertRecord(cumulative, readingDate, unit) {
 module.exports = {
   initialize,
   getAll,
+  insertRecord,
   connection,
 };

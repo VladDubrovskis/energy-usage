@@ -1,5 +1,8 @@
 const Koa = require('koa');
 const KoaRouter = require('koa-router');
+const koaBodyParser = require('koa-bodyparser');
+
+const moment = require('moment');
 const data = require('./data');
 
 const PORT = process.env.PORT || 3000;
@@ -8,6 +11,7 @@ function createServer() {
   const server = new Koa();
 
   const router = new KoaRouter();
+
   router.get('/', async (ctx, next) => {
     const readings = await data.getAll();
     ctx.body = readings.map(reading => {
@@ -18,7 +22,18 @@ function createServer() {
     next();
   });
 
+  router.post('/', async (ctx, next) => {
+    await data.insertRecord(
+        ctx.request.body.cumulative,
+        `${moment().format('YYYY-MM-DD')}T00:00:00.000Z`,
+        'kWh'
+      );
+    ctx.status = 200;
+    next();
+  });
+
   server.use(router.allowedMethods());
+  server.use(koaBodyParser());
   server.use(router.routes());
 
   return server;
