@@ -2,6 +2,7 @@ const { expect } = require('chai');
 
 const data = require('./data');
 const sampleData = require('../sampleData.json');
+const sampleDbData = require('../sampleDbData.json');
 
 describe('data', () => {
   beforeEach(() => data.initialize());
@@ -18,9 +19,7 @@ describe('data', () => {
       data.connection.all('SELECT * FROM meter_reads ORDER BY cumulative', (error, selectResult) => {
         expect(error).to.be.null;
         expect(selectResult).to.have.length(sampleData.electricity.length);
-        selectResult.forEach((row, index) => {
-          expect(row.cumulative).to.equal(sampleData.electricity[index].cumulative);
-        });
+        expect(selectResult).to.deep.equal(sampleDbData);
         done();
       });
     });
@@ -29,9 +28,7 @@ describe('data', () => {
   it('getAll should return all the data from database', async () => {
     const result = await data.getAll();
     expect(result).to.have.length(sampleData.electricity.length);
-    result.forEach((row, index) => {
-      expect(row.cumulative).to.equal(sampleData.electricity[index].cumulative);
-    });
+    expect(result).to.deep.equal(sampleDbData);
   });
 
   it('insertRecord should insert a new record to database', async () => {

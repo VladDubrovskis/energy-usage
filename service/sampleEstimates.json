@@ -1,0 +1,62 @@
+[
+  {
+    "cumulative": 303,
+    "reading_date": "2017-04-30T00:00:00.000Z",
+    "unit": "kWh"
+  },
+  {
+    "cumulative": 307,
+    "reading_date": "2017-05-31T00:00:00.000Z",
+    "unit": "kWh"
+  },
+  {
+    "cumulative": 209,
+    "reading_date": "2017-06-30T00:00:00.000Z",
+    "unit": "kWh"
+  },
+  {
+    "cumulative": 126,
+    "reading_date": "2017-07-31T00:00:00.000Z",
+    "unit": "kWh"
+  },
+  {
+    "cumulative": 167,
+    "reading_date": "2017-08-31T00:00:00.000Z",
+    "unit": "kWh"
+  },
+  {
+    "cumulative": 162,
+    "reading_date": "2017-09-30T00:00:00.000Z",
+    "unit": "kWh"
+  },
+  {
+    "cumulative": 87,
+    "reading_date": "2017-10-31T00:00:00.000Z",
+    "unit": "kWh"
+  },
+  {
+    "cumulative": 503,
+    "reading_date": "2017-11-30T00:00:00.000Z",
+    "unit": "kWh"
+  },
+  {
+    "cumulative": 277,
+    "reading_date": "2017-12-31T00:00:00.000Z",
+    "unit": "kWh"
+  },
+  {
+    "cumulative": 320,
+    "reading_date": "2018-01-31T00:00:00.000Z",
+    "unit": "kWh"
+  },
+  {
+    "cumulative": 413,
+    "reading_date": "2018-02-28T00:00:00.000Z",
+    "unit": "kWh"
+  },
+  {
+    "cumulative": 169,
+    "reading_date": "2018-03-31T00:00:00.000Z",
+    "unit": "kWh"
+  }
+]

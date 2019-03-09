@@ -7,6 +7,12 @@ const data = require('./data');
 const estimator = require('./estimator');
 
 const PORT = process.env.PORT || 3000;
+const mapDBKeysToPublicApi = (reading) => {
+  const readingCopy = reading;
+  readingCopy.readingDate = readingCopy.reading_date;
+  delete readingCopy.reading_date;
+  return readingCopy;
+};
 
 function createServer() {
   const server = new Koa();
@@ -15,12 +21,9 @@ function createServer() {
 
   router.get('/', async (ctx, next) => {
     const readings = await data.getAll();
-    ctx.body = readings.map((reading) => {
-      const readingCopy = reading;
-      readingCopy.readingDate = readingCopy.reading_date;
-      delete readingCopy.reading_date;
-      return readingCopy;
-    });
+    ctx.body = {
+      electricity: readings.map(mapDBKeysToPublicApi),
+    };
     next();
   });
 
@@ -36,9 +39,9 @@ function createServer() {
 
   router.get('/usage', async (ctx, next) => {
     const readings = await data.getAll();
-
+    const usage = estimator.parse(readings);
     ctx.body = {
-      estimate: estimator.parse(readings),
+      electricity: usage.map(mapDBKeysToPublicApi),
     };
     ctx.status = 200;
     next();
