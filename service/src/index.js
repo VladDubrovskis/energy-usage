@@ -34,13 +34,11 @@ function createServer() {
     next();
   });
 
-  router.get('/estimate', async (ctx, next) => {
-    const latestMeterReadings = await data.getLastTwoReadings();
-    const previousReading = latestMeterReadings.pop();
-    const latestReading = latestMeterReadings.pop();
+  router.get('/usage', async (ctx, next) => {
+    const readings = await data.getAll();
 
     ctx.body = {
-      estimate: estimator.calculate(latestReading, previousReading),
+      estimate: estimator.parse(readings),
     };
     ctx.status = 200;
     next();

@@ -53,9 +53,75 @@ describe('index', () => {
   });
 
   it('retrieve an estimate based on seed data', async () => {
-    const response = await request(instance).get('/estimate');
+    const response = await request(instance).get('/usage');
     expect(response.status).to.equal(200);
     expect(response.header['content-type']).to.match(/application\/json/);
-    expect(response.body.estimate).to.equal(352);
+    expect(response.body.estimate).to.deep.equal([
+      {
+        cumulative: 17859,
+        reading_date: '2017-04-30T00:00:00.000Z',
+        unit: 'kWh',
+      },
+      {
+        cumulative: 18102,
+        reading_date: '2017-05-31T00:00:00.000Z',
+        unit: 'kWh',
+      },
+      {
+        cumulative: 18290,
+        reading_date: '2017-06-30T00:00:00.000Z',
+        unit: 'kWh',
+      },
+      {
+        cumulative: 18453,
+        reading_date: '2017-07-31T00:00:00.000Z',
+        unit: 'kWh',
+      },
+      {
+        cumulative: 18620,
+        reading_date: '2017-08-31T00:00:00.000Z',
+        unit: 'kWh',
+      },
+      {
+        cumulative: 18782,
+        reading_date: '2017-09-30T00:00:00.000Z',
+        unit: 'kWh',
+      },
+      {
+        cumulative: 18965,
+        reading_date: '2017-10-31T00:00:00.000Z',
+        unit: 'kWh',
+      },
+      {
+        cumulative: 19230,
+        reading_date: '2017-11-30T00:00:00.000Z',
+        unit: 'kWh',
+      },
+      {
+        cumulative: 19517,
+        reading_date: '2017-12-31T00:00:00.000Z',
+        unit: 'kWh',
+      },
+      {
+        cumulative: 19827,
+        reading_date: '2018-01-31T00:00:00.000Z',
+        unit: 'kWh',
+      },
+      {
+        cumulative: 20113,
+        reading_date: '2018-02-28T00:00:00.000Z',
+        unit: 'kWh',
+      },
+      {
+        cumulative: 20376,
+        reading_date: '2018-03-31T00:00:00.000Z',
+        unit: 'kWh',
+      },
+      {
+        cumulative: 20610,
+        reading_date: '2018-04-30T00:00:00.000Z',
+        unit: 'kWh',
+      },
+    ]);
   });
 });

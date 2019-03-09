@@ -48,6 +48,9 @@ const calculate = (latest, previousMonth) => {
   return Math.ceil(usageSinceLast + (daysLeft * dailyUsage));
 };
 
+const parse = dataset => dataset;
+
 module.exports = {
   calculate,
+  parse,
 };
