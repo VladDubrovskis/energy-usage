@@ -49,6 +49,19 @@ function getAll() {
   });
 }
 
+function getLastTwoReadings() {
+  return new Promise((resolve, reject) => {
+    connection.serialize(() => {
+      connection.all('SELECT * FROM meter_reads ORDER BY cumulative DESC LIMIT 2', (error, selectResult) => {
+        if (error) {
+          reject(error);
+        }
+        resolve(selectResult);
+      })
+    })
+  });
+}
+
 function insertRecord(cumulative, readingDate, unit) {
   return new Promise((resolve, reject) => {
     connection.run(
@@ -63,6 +76,7 @@ function insertRecord(cumulative, readingDate, unit) {
 module.exports = {
   initialize,
   getAll,
+  getLastTwoReadings,
   insertRecord,
   connection,
 };
