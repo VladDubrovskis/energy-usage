@@ -44,4 +44,11 @@ describe('index', () => {
     expect(getDataResponse.header['content-type']).to.match(/application\/json/);
     expect(getDataResponse.body).to.deep.equal(expectation);
   });
+
+  it('retrieve an estimate based on seed data', async () => {
+    const response = await request(instance).get('/');
+    expect(response.status).to.equal(200);
+    expect(response.header['content-type']).to.match(/application\/json/);
+    expect(response.body.estimate).to.equal(352);
+  });
 });
