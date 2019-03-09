@@ -8,8 +8,13 @@ function createServer() {
   const server = new Koa();
 
   const router = new KoaRouter();
-  router.get('/', (ctx, next) => {
-    ctx.body = 'Hello world';
+  router.get('/', async (ctx, next) => {
+    const readings = await data.getAll();
+    ctx.body = readings.map(reading => {
+      reading.readingDate = reading.reading_date;
+      delete reading.reading_date;
+      return reading;
+    });
     next();
   });
 
