@@ -46,7 +46,7 @@ describe('index', () => {
   });
 
   it('retrieve an estimate based on seed data', async () => {
-    const response = await request(instance).get('/');
+    const response = await request(instance).get('/estimate');
     expect(response.status).to.equal(200);
     expect(response.header['content-type']).to.match(/application\/json/);
     expect(response.body.estimate).to.equal(352);

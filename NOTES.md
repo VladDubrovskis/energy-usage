@@ -12,4 +12,5 @@ Notes:
 - Calculation for the estimate will be done based on idea that last 2 entries are from current and previous month. In real application probably would validate that before estimation
 - Also would probably make the current request date play some role in decision making, or make it a parameter
 - In daily usage calculation decided to round up, which I think makes sense.
-- Updated the rounding up to be on thw whole estimate rather than on daily bases - as that would be bad to customer and probably not ethical, so against the main points of Bulb 
+- Updated the rounding up to be on thw whole estimate rather than on daily bases - as that would be bad to customer and probably not ethical, so against the main points of Bulb
+ 
