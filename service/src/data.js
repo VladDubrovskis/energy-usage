@@ -3,6 +3,16 @@ const sampleData = require('../sampleData.json');
 
 const connection = new sqlite3.Database(':memory:');
 
+function insertRecord(cumulative, readingDate, unit) {
+  return new Promise((resolve, reject) => {
+    connection.run(
+      'INSERT INTO meter_reads (cumulative, reading_date, unit) VALUES (?, ?, ?)',
+      [cumulative, readingDate, unit],
+      error => (error ? reject(error) : resolve()),
+    );
+  });
+}
+
 /**
  * Imports the data from the sampleData.json file into a `meter_reads` table.
  * The table contains three columns - cumulative, reading_date and unit.
@@ -16,7 +26,7 @@ const connection = new sqlite3.Database(':memory:');
 function initialize() {
   return new Promise((resolve, reject) => {
     connection.serialize(() => {
-      connection.run('CREATE TABLE meter_reads (cumulative INTEGER, reading_date TEXT, unit TEXT)', (error, result) => {
+      connection.run('CREATE TABLE meter_reads (cumulative INTEGER, reading_date TEXT, unit TEXT)', (error) => {
         if (error) {
           reject(error);
         }
@@ -24,16 +34,12 @@ function initialize() {
 
       const { electricity } = sampleData;
 
-      Promise.all(
-          electricity.map(
-              ({cumulative, readingDate, unit}) => insertRecord(cumulative, readingDate, unit)
-          ))
-            .then(resolve)
-            .catch(reject);
-
+      Promise.all(electricity
+        .map(({ cumulative, readingDate, unit }) => insertRecord(cumulative, readingDate, unit)))
+        .then(resolve)
+        .catch(reject);
     });
   });
-
 }
 
 function getAll() {
@@ -44,8 +50,8 @@ function getAll() {
           reject(error);
         }
         resolve(selectResult);
-      })
-    })
+      });
+    });
   });
 }
 
@@ -57,20 +63,9 @@ function getLastTwoReadings() {
           reject(error);
         }
         resolve(selectResult);
-      })
-    })
+      });
+    });
   });
-}
-
-function insertRecord(cumulative, readingDate, unit) {
-  return new Promise((resolve, reject) => {
-    connection.run(
-        'INSERT INTO meter_reads (cumulative, reading_date, unit) VALUES (?, ?, ?)',
-        [cumulative, readingDate, unit],
-        (error) => (error ? reject(error) : resolve())
-    );
-  })
-
 }
 
 module.exports = {

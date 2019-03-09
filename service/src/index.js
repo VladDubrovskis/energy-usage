@@ -14,20 +14,21 @@ function createServer() {
 
   router.get('/', async (ctx, next) => {
     const readings = await data.getAll();
-    ctx.body = readings.map(reading => {
-      reading.readingDate = reading.reading_date;
-      delete reading.reading_date;
-      return reading;
+    ctx.body = readings.map((reading) => {
+      const readingCopy = reading;
+      readingCopy.readingDate = readingCopy.reading_date;
+      delete readingCopy.reading_date;
+      return readingCopy;
     });
     next();
   });
 
   router.post('/', async (ctx, next) => {
     await data.insertRecord(
-        ctx.request.body.cumulative,
-        `${moment().format('YYYY-MM-DD')}T00:00:00.000Z`,
-        'kWh'
-      );
+      ctx.request.body.cumulative,
+      `${moment().format('YYYY-MM-DD')}T00:00:00.000Z`,
+      'kWh',
+    );
     ctx.status = 200;
     next();
   });
@@ -48,5 +49,4 @@ if (!module.parent) {
       console.log(`server listening on port ${PORT}`);
     });
   });
-
 }
