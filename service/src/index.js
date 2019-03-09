@@ -22,9 +22,11 @@ function createServer() {
 module.exports = createServer;
 
 if (!module.parent) {
-  data.initialize();
-  const server = createServer();
-  server.listen(PORT, () => {
-    console.log(`server listening on port ${PORT}`);
+  data.initialize().then(() => {
+    const server = createServer();
+    server.listen(PORT, () => {
+      console.log(`server listening on port ${PORT}`);
+    });
   });
+
 }

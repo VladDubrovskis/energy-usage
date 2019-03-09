@@ -1,8 +1,8 @@
-Candidate Name: [To be completed]
+Candidate Name: Vlad Dubrovskis
 
-Tasks: [To be completed]
+Tasks: 2 and 3
 
-Time: [To be completed]
+Time: TBC
 
 Notes:
-[Explain your approach and anything particular of note in your solution]
+- Added `supertest` to test the service and removed the initial test - as does not really matter if is Koa running the service as long as there is an endpoint that works.

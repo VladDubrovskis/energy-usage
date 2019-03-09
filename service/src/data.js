@@ -14,20 +14,54 @@ const connection = new sqlite3.Database(':memory:');
  * server restarts.
  */
 function initialize() {
-  connection.serialize(() => {
-    connection.run('CREATE TABLE meter_reads (cumulative INTEGER, reading_date TEXT, unit TEXT)');
+  return new Promise((resolve, reject) => {
+    connection.serialize(() => {
+      connection.run('CREATE TABLE meter_reads (cumulative INTEGER, reading_date TEXT, unit TEXT)', (error, result) => {
+        if (error) {
+          reject(error);
+        }
+      });
 
-    const { electricity } = sampleData;
-    electricity.forEach((data) => {
-      connection.run(
-        'INSERT INTO meter_reads (cumulative, reading_date, unit) VALUES (?, ?, ?)',
-        [data.cumulative, data.readingDate, data.unit],
-      );
+      const { electricity } = sampleData;
+
+      Promise.all(
+          electricity.map(
+              ({cumulative, readingDate, unit}) => insertRecord(cumulative, readingDate, unit)
+          ))
+            .then(resolve)
+            .catch(reject);
+
     });
   });
+
+}
+
+function getAll() {
+  return new Promise((resolve, reject) => {
+    connection.serialize(() => {
+      connection.all('SELECT * FROM meter_reads ORDER BY cumulative', (error, selectResult) => {
+        if (error) {
+          reject(error);
+        }
+        resolve(selectResult);
+      })
+    })
+  });
+}
+
+function insertRecord(cumulative, readingDate, unit) {
+  return new Promise((resolve, reject) => {
+    connection.run(
+        'INSERT INTO meter_reads (cumulative, reading_date, unit) VALUES (?, ?, ?)',
+        [cumulative, readingDate, unit],
+        (error) => (error ? reject(error) : resolve())
+    );
+  })
+
 }
 
 module.exports = {
   initialize,
+  getAll,
   connection,
 };
