@@ -176,6 +176,8 @@ describe('data', () => {
   });
 
   it('correctly calculates estimate if last reading was on the last day of the month', () => {
-    expect(calculate(latestMeterReadingEndOfTheMonth, previousMonth)).to.equal(344);
+    expect(calculate(latestMeterReadingEndOfTheMonth, previousMonth)).to.deep.equal({
+
+    });
   });
 });

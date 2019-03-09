@@ -44,17 +44,4 @@ describe('data', () => {
       unit: 'kWh',
     });
   });
-
-  it('getLastTwoReadings should return last 2 meter readings', async () => {
-    const result = await data.getLastTwoReadings();
-    expect(result).to.deep.equal([{
-      cumulative: 20750,
-      reading_date: '2018-04-29T00:00:00.000Z',
-      unit: 'kWh',
-    }, {
-      cumulative: 20406,
-      reading_date: '2018-03-14T00:00:00.000Z',
-      unit: 'kWh',
-    }]);
-  });
 });
