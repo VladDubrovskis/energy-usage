@@ -4,6 +4,7 @@ const koaBodyParser = require('koa-bodyparser');
 
 const moment = require('moment');
 const data = require('./data');
+const estimator = require('./estimator');
 
 const PORT = process.env.PORT || 3000;
 
@@ -29,6 +30,18 @@ function createServer() {
       `${moment().format('YYYY-MM-DD')}T00:00:00.000Z`,
       'kWh',
     );
+    ctx.status = 200;
+    next();
+  });
+
+  router.get('/estimate', async (ctx, next) => {
+    const latestMeterReadings = await data.getLastTwoReadings();
+    const previousReading = latestMeterReadings.pop();
+    const latestReading = latestMeterReadings.pop();
+
+    ctx.body = {
+      estimate: estimator.calculate(latestReading, previousReading),
+    };
     ctx.status = 200;
     next();
   });

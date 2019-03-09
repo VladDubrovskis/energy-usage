@@ -9,13 +9,20 @@ const sampleData = require('../sampleData.json');
 let instance;
 
 describe('index', () => {
-  before((done) => {
+  beforeEach((done) => {
     data.initialize().then(() => {
       instance = server().listen(process.env.TEST_SERVER_PORT || 8888);
       done();
     });
   });
-  after(() => { instance.close(); });
+  afterEach(() => {
+    instance.close();
+    data.connection.run('DROP TABLE meter_reads', (error) => {
+      if (error) {
+        throw error;
+      }
+    });
+  });
 
   it('retrieve a list of meter readings from the database', async () => {
     const response = await request(instance).get('/');
